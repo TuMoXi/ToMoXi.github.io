@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 适配手机端视口设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>学习党的二十届四中全会精神</title>
+    <!-- 引入Tailwind CSS用于样式设计 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome用于图标 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 自定义Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    // 定义主题颜色（红色系为主，体现党建特色）
+                    colors: {
+                        primary: '#C91F37',    // 党旗红
+                        secondary: '#E63946',  // 红色变体
+                        accent: '#FFB703',     // 金色点缀
+                        dark: '#1D3557',       // 深色文本
+                        light: '#F1FAEE',      // 浅色背景
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-shadow {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+            .boat-float {
+                animation: float 3s ease-in-out infinite;
+            }
+        }
+    </style>
+    
+    <style>
+        /* 基础动画定义 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 2s infinite;
+        }
+        
+        /* 滚动监听动画触发 */
+        .reveal {
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 导航栏滚动效果 */
+        .navbar {
+            transition: background-color 0.3s ease, padding 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(201, 31, 55, 0.95);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        /* 引导页样式 */
+        #introPage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s;
+        }
+        
+        #introPage.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .red-boat {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .red-boat:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body class="bg-light font-sans text-dark scroll-smooth">
+    <!-- 红船会议引导页 -->
+    <div id="introPage" class="bg-gradient-to-b from-blue-900 to-blue-800">
+        <!-- 天空和远景 -->
+        <div class="absolute inset-0 overflow-hidden">
+            <!-- 远处的山 -->
+            <div class="absolute bottom-40 left-0 right-0 h-24 bg-blue-900/50 rounded-t-full"></div>
+            
+            <!-- 湖面 -->
+            <div class="absolute bottom-0 left-0 right-0 h-40 bg-blue-800/30 backdrop-blur-sm"></div>
+            
+            <!-- 水面波纹 -->
+            <div class="absolute bottom-10 left-0 right-0 h-1 bg-blue-700/20 rounded-full"></div>
+            <div class="absolute bottom-15 left-0 right-0 h-1 bg-blue-700/10 rounded-full"></div>
+            <div class="absolute bottom-20 left-0 right-0 h-1 bg-blue-700/5 rounded-full"></div>
+        </div>
+        
+        <!-- 红船 -->
+        <div class="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-10 boat-float">
+            <img src="https://picsum.photos/id/1061/300/150" alt="南湖红船" class="red-boat w-48 md:w-64 object-contain" id="redBoat">
+        </div>
+        
+        <!-- 引导文字 -->
+        <div class="absolute top-1/4 left-0 right-0 text-center z-20 animate-fadeIn">
+            <h1 class="text-white text-[clamp(1.5rem,5vw,2.5rem)] font-bold mb-4 text-shadow">
+                从红船精神到新时代使命
+            </h1>
+            <p class="text-white/80 text-[clamp(1rem,3vw,1.2rem)] max-w-md mx-auto">
+                点击南湖红船，开启学习党的二十届四中全会精神之旅
+            </p>
+        </div>
+        
+        <!-- 装饰性元素 -->
+        <div class="absolute top-10 left-10 text-white/60">
+            <i class="fa fa-star text-accent animate-pulse-slow"></i>
+        </div>
+        <div class="absolute top-20 right-16 text-white/40">
+            <i class="fa fa-star text-accent/70 animate-pulse-slow" style="animation-delay: 0.5s"></i>
+        </div>
+        <div class="absolute top-40 left-1/3 text-white/30">
+            <i class="fa fa-star text-accent/50 animate-pulse-slow" style="animation-delay: 1s"></i>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 bg-primary/90 text-white">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-flag text-accent text-xl"></i>
+                <span class="font-bold text-lg">学习二十届四中全会精神</span>
+            </div>
+            <button id="menuBtn" class="text-white focus:outline-none">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="hidden bg-primary/95 absolute w-full">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#overview" class="py-2 hover:text-accent transition-colors">全会概述</a>
+                <a href="#keyPoints" class="py-2 hover:text-accent transition-colors">核心要点</a>
+                <a href="#youthMission" class="py-2 hover:text-accent transition-colors">青年使命</a>
+                <a href="#quiz" class="py-2 hover:text-accent transition-colors">知识问答</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 头部横幅 -->
+    <header class="pt-20 pb-16 bg-gradient-to-b from-primary to-secondary text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="inline-block mb-4 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span class="text-sm md:text-base">主题学习教育</span>
+            </div>
+            <h1 class="text-[clamp(1.8rem,5vw,2.8rem)] font-bold mb-4 leading-tight text-shadow animate-fadeIn">
+                学习党的二十届四中全会精神
+            </h1>
+            <p class="text-[clamp(1rem,3vw,1.2rem)] max-w-2xl mx-auto opacity-90 mb-8 animate-fadeIn" style="animation-delay: 0.2s">
+                奋进新征程，建功新时代，青年团员的使命与担当
+            </p>
+            <a href="#overview" class="inline-block bg-white text-primary font-medium px-6 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all animate-fadeIn" style="animation-delay: 0.4s">
+                开始学习 <i class="fa fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <!-- 1. 全会概述部分 -->
+        <section id="overview" class="mb-20 reveal">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-1 bg-primary rounded-full mr-3"></div>
+                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-dark">全会概述</h2>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow">
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="md:w-1/2">
+                        <img src="https://picsum.photos/id/1071/600/400" alt="二十届四中全会学习" class="w-full h-64 object-cover rounded-xl mb-6">
+                        <div class="bg-light p-4 rounded-lg border-l-4 border-primary">
+                            <h3 class="font-bold mb-2 flex items-center">
+                                <i class="fa fa-calendar-check-o text-primary mr-2"></i> 召开时间
+                            </h3>
+                            <p>2024年9月16日至19日在北京召开</p>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <h3 class="text-xl font-bold mb-4 text-primary">会议背景与意义</h3>
+                        <p class="mb-4 leading-relaxed">
+                            党的二十届四中全会是在中华人民共和国成立75周年、实现“十四五”规划目标任务关键之年召开的一次重要会议。
+                        </p>
+                        <p class="mb-4 leading-relaxed">
+                            全会审议通过了《中共中央关于进一步全面深化改革、推进国家治理体系和治理能力现代化若干重大问题的决定》，为全面建设社会主义现代化国家、全面推进中华民族伟大复兴提供了有力保障。
+                        </p>
+                        <p class="leading-relaxed">
+                            全会强调，要坚持和加强党的全面领导，团结带领全国各族人民，在新征程上不断夺取全面建设社会主义现代化国家新胜利。
+                        </p>
+                        
+                        <div class="mt-6">
+                            <button id="playAudio" class="flex items-center text-white bg-primary hover:bg-secondary px-4 py-2 rounded-lg transition-colors">
+                                <i class="fa fa-play mr-2"></i> 收听会议精神解读
+                            </button>
+                            <audio id="audioPlayer" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" class="hidden"></audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 核心要点部分 -->
+        <section id="keyPoints" class="mb-20 reveal">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-1 bg-primary rounded-full mr-3"></div>
+                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-dark">核心要点</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 要点卡片1 -->
+                <div class="bg-white rounded-xl p-6 card-shadow hover:transform hover:-translate-y-2 transition-all">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-line-chart text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">高质量发展</h3>
+                    <p class="text-gray-600">
+                        全会强调要完整、准确、全面贯彻新发展理念，加快构建新发展格局，着力推动高质量发展，深化改革开放，建设现代化产业体系。
+                    </p>
+                </div>
+                
+                <!-- 要点卡片2 -->
+                <div class="bg-white rounded-xl p-6 card-shadow hover:transform hover:-translate-y-2 transition-all">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-users text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">民生保障</h3>
+                    <p class="text-gray-600">
+                        坚持以人民为中心的发展思想，在发展中保障和改善民生，健全社会保障体系，推进健康中国建设，不断增强人民群众获得感、幸福感、安全感。
+                    </p>
+                </div>
+                
+                <!-- 要点卡片3 -->
+                <div class="bg-white rounded-xl p-6 card-shadow hover:transform hover:-translate-y-2 transition-all">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-shield text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">国家安全</h3>
+                    <p class="text-gray-600">
+                        统筹发展和安全，坚定不移贯彻总体国家安全观，健全国家安全体系，增强维护国家安全能力，提高公共安全治理水平。
+                    </p>
+                </div>
+                
+                <!-- 要点卡片4 -->
+                <div class="bg-white rounded-xl p-6 card-shadow hover:transform hover:-translate-y-2 transition-all">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-leaf text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">生态文明</h3>
+                    <p class="text-gray-600">
+                        推进生态文明建设，坚持绿色发展，促进人与自然和谐共生，统筹产业结构调整、污染治理、生态保护，推动美丽中国建设。
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 要点图解 -->
+            <div class="mt-10 bg-white rounded-xl p-6 md:p-8 card-shadow">
+                <h3 class="text-xl font-bold mb-6 text-center">二十届四中全会精神要点图解</h3>
+                <div class="overflow-x-auto">
+                    <img src="https://picsum.photos/id/1073/1200/600" alt="四中全会要点图解" class="w-full max-w-4xl mx-auto rounded-lg">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 青年使命部分 -->
+        <section id="youthMission" class="mb-20 reveal">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-1 bg-primary rounded-full mr-3"></div>
+                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-dark">青年使命与担当</h2>
+            </div>
+            
+            <div class="bg-gradient-to-r from-primary/90 to-secondary text-white rounded-2xl p-6 md:p-10">
+                <div class="max-w-3xl mx-auto text-center mb-10">
+                    <h3 class="text-2xl font-bold mb-4">青年兴则国家兴，青年强则国家强</h3>
+                    <p class="opacity-90">
+                        二十届四中全会对青年一代提出了殷切期望，号召广大青年坚定不移听党话、跟党走，怀抱梦想又脚踏实地，敢想敢为又善作善成。
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- 青年行动1 -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 hover:bg-white/20 transition-colors">
+                        <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <i class="fa fa-book text-accent text-2xl"></i>
+                        </div>
+                        <h4 class="text-center font-bold text-lg mb-3">加强理论学习</h4>
+                        <p class="text-center text-white/80 text-sm">
+                            深入学习领会全会精神，用党的创新理论武装头脑，树立远大理想，坚定理想信念。
+                        </p>
+                    </div>
+                    
+                    <!-- 青年行动2 -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 hover:bg-white/20 transition-colors">
+                        <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <i class="fa fa-briefcase text-accent text-2xl"></i>
+                        </div>
+                        <h4 class="text-center font-bold text-lg mb-3">投身实践创新</h4>
+                        <p class="text-center text-white/80 text-sm">
+                            立足本职岗位，积极投身科技创新、乡村振兴等国家战略，贡献青春智慧和力量。
+                        </p>
+                    </div>
+                    
+                    <!-- 青年行动3 -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 hover:bg-white/20 transition-colors">
+                        <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <i class="fa fa-heart text-accent text-2xl"></i>
+                        </div>
+                        <h4 class="text-center font-bold text-lg mb-3">传承奋斗精神</h4>
+                        <p class="text-center text-white/80 text-sm">
+                            弘扬伟大建党精神，传承红色基因，在奋斗中释放青春激情，追逐青春理想。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 团日活动倡议 -->
+                <div class="mt-10 text-center">
+                    <a href="#" class="inline-block bg-white text-primary font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                        参与主题团日活动 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 知识问答部分 -->
+        <section id="quiz" class="mb-10 reveal">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-1 bg-primary rounded-full mr-3"></div>
+                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-dark">知识问答</h2>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow">
+                <h3 class="text-xl font-bold mb-6 text-center">测试你的学习成果</h3>
+                
+                <div id="quizContainer" class="space-y-6">
+                    <!-- 问题1 -->
+                    <div class="quiz-question border-b pb-6">
+                        <p class="font-bold mb-4">1. 党的二十届四中全会召开的时间是？</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q1" value="A" class="mr-3">
+                                <span>2023年10月</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q1" value="B" class="mr-3">
+                                <span>2024年9月</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q1" value="C" class="mr-3">
+                                <span>2024年10月</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题2 -->
+                    <div class="quiz-question border-b pb-6">
+                        <p class="font-bold mb-4">2. 二十届四中全会强调要着力推动什么发展？</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q2" value="A" class="mr-3">
+                                <span>高速发展</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q2" value="B" class="mr-3">
+                                <span>高质量发展</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q2" value="C" class="mr-3">
+                                <span>可持续发展</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题3 -->
+                    <div class="quiz-question">
+                        <p class="font-bold mb-4">3. 全会对青年提出的要求不包括以下哪项？</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q3" value="A" class="mr-3">
+                                <span>坚定不移听党话、跟党走</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q3" value="B" class="mr-3">
+                                <span>怀抱梦想又脚踏实地</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-light cursor-pointer">
+                                <input type="radio" name="q3" value="C" class="mr-3">
+                                <span>专注个人发展，忽视集体利益</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <button id="submitQuiz" class="bg-primary hover:bg-secondary text-white font-bold px-6 py-3 rounded-full transition-colors">
+                        提交答案 <i class="fa fa-check ml-2"></i>
+                    </button>
+                </div>
+                
+                <!-- 答案结果 -->
+                <div id="quizResult" class="mt-8 hidden">
+                    <div class="p-6 rounded-lg bg-light text-center">
+                        <h4 class="text-xl font-bold mb-2" id="resultScore"></h4>
+                        <p id="resultMessage" class="mb-4"></p>
+                        <button id="resetQuiz" class="text-primary hover:text-secondary font-medium transition-colors">
+                            重新答题 <i class="fa fa-refresh ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-10">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
+                    <i class="fa fa-flag text-2xl text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold">学习党的二十届四中全会精神</h3>
+                <p class="mt-2 text-gray-400">青春心向党 · 奋进新征程</p>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-6 mt-6 text-center text-gray-400 text-sm">
+                <p>© 2024 主题学习教育平台 | 共青团中央指导</p>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <a href="#" class="hover:text-accent transition-colors"><i class="fa fa-weixin text-xl"></i></a>
+                    <a href="#" class="hover:text-accent transition-colors"><i class="fa fa-weibo text-xl"></i></a>
+                    <a href="#" class="hover:text-accent transition-colors"><i class="fa fa-youtube-play text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all z-50">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 红船引导页功能
+            const introPage = document.getElementById('introPage');
+            const redBoat = document.getElementById('redBoat');
+            
+            // 点击红船进入主页面
+            redBoat.addEventListener('click', function() {
+                introPage.classList.add('hidden');
+                // 播放进入动画音效（可选）
+                // const audio = new Audio('enter-sound.mp3');
+                // audio.play();
+            });
+            
+            // 导航菜单切换
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            menuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                // 切换图标
+                const icon = menuBtn.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+            
+            // 点击导航链接关闭菜单
+            const navLinks = mobileMenu.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    const icon = menuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+            
+            // 导航栏滚动效果
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // 滚动显示动画
+            function checkReveal() {
+                const reveals = document.querySelectorAll('.reveal');
+                const windowHeight = window.innerHeight;
+                
+                reveals.forEach(reveal => {
+                    const revealTop = reveal.getBoundingClientRect().top;
+                    const revealPoint = 150;
+                    
+                    if (revealTop < windowHeight - revealPoint) {
+                        reveal.classList.add('active');
+                    }
+                });
+            }
+            
+            // 初始检查和滚动时检查
+            checkReveal();
+            window.addEventListener('scroll', checkReveal);
+            
+            // 音频播放控制
+            const playAudioBtn = document.getElementById('playAudio');
+            const audioPlayer = document.getElementById('audioPlayer');
+            
+            playAudioBtn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                    this.textContent = ' 暂停播放';
+                    this.prepend(icon);
+                } else {
+                    audioPlayer.pause();
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-play');
+                    this.textContent = ' 收听会议精神解读';
+                    this.prepend(icon);
+                }
+            });
+            
+            // 知识问答功能
+            const submitQuizBtn = document.getElementById('submitQuiz');
+            const resetQuizBtn = document.getElementById('resetQuiz');
+            const quizResult = document.getElementById('quizResult');
+            const resultScore = document.getElementById('resultScore');
+            const resultMessage = document.getElementById('resultMessage');
+            
+            submitQuizBtn.addEventListener('click', function() {
+                // 正确答案
+                const correctAnswers = {
+                    q1: 'B',
+                    q2: 'B',
+                    q3: 'C'
+                };
+                
+                // 获取用户答案
+                let score = 0;
+                const totalQuestions = Object.keys(correctAnswers).length;
+                
+                for (const [question, correctAnswer] of Object.entries(correctAnswers)) {
+                    const userAnswer = document.querySelector(`input[name="${question}"]:checked`)?.value;
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                    }
+                }
+                
+                // 显示结果
+                resultScore.textContent = `你的得分：${score}/${totalQuestions}`;
+                
+                // 根据得分显示不同消息
+                if (score === totalQuestions) {
+                    resultMessage.textContent = '太棒了！你对二十届四中全会精神有深入的了解！';
+                } else if (score >= 2) {
+                    resultMessage.textContent = '不错哦！继续学习可以掌握更多全会精神要点。';
+                } else {
+                    resultMessage.textContent = '继续加油，多学习了解二十届四中全会精神吧！';
+                }
+                
+                quizResult.classList.remove('hidden');
+            });
+            
+            // 重置问答
+            resetQuizBtn.addEventListener('click', function() {
+                // 清除选中状态
+                const radioInputs = document.querySelectorAll('input[type="radio"]');
+                radioInputs.forEach(input => {
+                    input.checked = false;
+                });
+                
+                // 隐藏结果
+                quizResult.classList.add('hidden');
+            });
+            
+            // 返回顶部按钮
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible');
+                    backToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopBtn.classList.remove('opacity-100', 'visible');
+                    backToTopBtn.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
